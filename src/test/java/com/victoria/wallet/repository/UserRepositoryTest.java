@@ -13,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.victoria.wallet.entity.User;
@@ -20,6 +21,7 @@ import com.victoria.wallet.entity.User;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
+@TestPropertySource(locations="classpath:application-test.properties")
 public class UserRepositoryTest {
 
     private static final String EMAIL = "email@teste.com";
