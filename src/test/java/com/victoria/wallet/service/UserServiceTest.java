@@ -21,8 +21,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ActiveProfiles("test")
-@TestPropertySource(locations="classpath:application-test.properties")
+//@ActiveProfiles("test")
 public class UserServiceTest {
 
     @MockBean

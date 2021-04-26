@@ -20,8 +20,7 @@ import com.victoria.wallet.entity.User;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ActiveProfiles("test")
-@TestPropertySource(locations="classpath:application-test.properties")
+//@ActiveProfiles("test")
 public class UserRepositoryTest {
 
     private static final String EMAIL = "email@teste.com";
