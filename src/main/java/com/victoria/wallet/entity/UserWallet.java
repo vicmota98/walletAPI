@@ -5,9 +5,9 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Data
 @Entity
 @Table(name = "users_wallet")
+@Data
 public class UserWallet implements Serializable {
     private static final long serialVersionUID = -18239127497891273L;
 
