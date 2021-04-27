@@ -11,7 +11,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotNull;
 
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL) // adiciona apenas valores não nulos
 public class UserDTO {
 
     private Long id;
