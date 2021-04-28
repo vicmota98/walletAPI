@@ -2,6 +2,7 @@ package com.victoria.wallet.repository;
 
 import com.victoria.wallet.entity.Wallet;
 import com.victoria.wallet.entity.WalletItem;
+import com.victoria.wallet.util.enums.TypeEnum;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class WalletItemRepositoryTest {
 
     private static final Date DATE = new Date();
     private static final String DESCRIPTION ="Conta de luz";
-    private static final String TYPE ="EN";
+    private static final TypeEnum TYPE = TypeEnum.EN;
     private static final BigDecimal VALUE = BigDecimal.valueOf(65);
 
     @Autowired

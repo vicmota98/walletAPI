@@ -1,5 +1,6 @@
 package com.victoria.wallet.entity;
 
+import com.victoria.wallet.util.enums.TypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -28,8 +30,9 @@ public class WalletItem implements Serializable {
     private Wallet wallet;
     @NotNull
     private Date date;
-    @NotNull
-    private String type;
+    @Enumerated(EnumType.STRING)
+    @NotNull(message = "Inserir tipo")
+    private TypeEnum type;
     @NotNull
     private String description;
     private BigDecimal value;
