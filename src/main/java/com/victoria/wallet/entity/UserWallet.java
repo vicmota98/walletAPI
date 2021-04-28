@@ -6,8 +6,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "users_wallet")
 @Data
+@Table(name = "users_wallet")
 public class UserWallet implements Serializable {
     private static final long serialVersionUID = -18239127497891273L;
 

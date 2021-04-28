@@ -10,10 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -36,6 +33,19 @@ public class UserController {
         response.setData(this.convertEntityToDto(user));
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
+//    @DeleteMapping
+//    public ResponseEntity<Object> remove(@Valid @RequestBody UserDTO dto, BindingResult result) {
+//        Response<UserDTO> response = new Response<UserDTO>();
+//
+//        if(result.hasErrors()) {
+//            result.getAllErrors().forEach(e -> response.getErrors().remove(e.getDefaultMessage()));
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+//        }
+//        User user =  service.save(this.convertDtoToEntity(dto));
+//        response.setData(this.convertEntityToDto(user));
+//        return ResponseEntity.status(HttpStatus.OK).body(response);
+//    }
 
     private User convertDtoToEntity(UserDTO dto) {
         User u = new User();
