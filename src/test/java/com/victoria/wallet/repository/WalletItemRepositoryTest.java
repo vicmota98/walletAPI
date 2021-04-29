@@ -9,32 +9,39 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.validation.ConstraintViolationException;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class WalletItemRepositoryTest {
+//@ActiveProfiles("test")
+public class WalletItemRepositoryTest{
 
     private static final Date DATE = new Date();
-    private static final String DESCRIPTION ="Conta de luz";
     private static final TypeEnum TYPE = TypeEnum.EN;
+    private static final String DESCRIPTION = "Conta de Luz";
     private static final BigDecimal VALUE = BigDecimal.valueOf(65);
     private Long savedWalletItemId = null;
     private Long savedWalletId = null;
 
     @Autowired
     WalletItemRepository repository;
-
     @Autowired
     WalletRepository walletRepository;
+
 
 //    @Before
 //    public void setUp() {
@@ -57,7 +64,8 @@ public class WalletItemRepositoryTest {
 //    }
 
     @Test
-    public void testSaveWalletItem() {
+    public void testSave() {
+
         Wallet w = new Wallet();
         w.setName("Carteira 1");
         w.setValue(BigDecimal.valueOf(500));
@@ -77,7 +85,7 @@ public class WalletItemRepositoryTest {
 
     @Test(expected = ConstraintViolationException.class)
     public void testSaveInvalidWalletItem() {
-        WalletItem wi = new WalletItem(null,null, DATE, null, DESCRIPTION,null);
+        WalletItem wi = new WalletItem(null, null, DATE, null, DESCRIPTION, null);
         repository.save(wi);
     }
 
@@ -109,5 +117,58 @@ public class WalletItemRepositoryTest {
         Optional<WalletItem> response = repository.findById(wi.getId());
 
         assertFalse(response.isPresent());
+    }
+
+    @Test
+    public void testFindBetweenDates() {
+        Optional<Wallet> w = walletRepository.findById(savedWalletId);
+
+        LocalDateTime localDateTime = DATE.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+
+        Date currentDatePlusFiveDays = Date.from(localDateTime.plusDays(5).atZone(ZoneId.systemDefault()).toInstant());
+        Date currentDatePlusSevenDays = Date.from(localDateTime.plusDays(7).atZone(ZoneId.systemDefault()).toInstant());
+
+
+        repository.save(new WalletItem(null, w.get(), currentDatePlusFiveDays, TYPE, DESCRIPTION, VALUE));
+        repository.save(new WalletItem(null, w.get(), currentDatePlusSevenDays, TYPE, DESCRIPTION, VALUE));
+
+        Pageable pg = PageRequest.of(0,10);
+        Page<WalletItem> response = repository.findAllByWalletIdAndDateGreaterThanEqualAndDateLessThanEqual(savedWalletId, DATE, currentDatePlusFiveDays,pg);
+
+        assertEquals(response.getContent().size(), 2);
+        assertEquals(response.getTotalElements(), 2);
+        assertEquals(response.getContent().get(0).getWallet().getId(), savedWalletId);
+    }
+
+    @Test
+    public void testFindByType() {
+        List<WalletItem> response = repository.findByWalletIdAndType(savedWalletId, TYPE);
+
+        assertEquals(response.size(), 0);
+        assertEquals(response.get(0).getType(), TYPE);
+    }
+
+    @Test
+    public void testFindByTypeSd() {
+
+        Optional<Wallet> w = walletRepository.findById(savedWalletId);
+
+        repository.save(new WalletItem(null, w.get(), DATE, TypeEnum.SD, DESCRIPTION, VALUE));
+
+        List<WalletItem> response = repository.findByWalletIdAndType(savedWalletId, TypeEnum.SD);
+
+        assertEquals(response.size(), 1);
+        assertEquals(response.get(0).getType(), TypeEnum.SD);
+    }
+
+    @Test
+    public void testSumByWallet() {
+        Optional<Wallet> w = walletRepository.findById(savedWalletId);
+
+        repository.save(new WalletItem(null, w.get(), DATE, TYPE, DESCRIPTION, BigDecimal.valueOf(150.80)));
+
+        BigDecimal response = repository.sumByWalletId(savedWalletId);
+
+        assertEquals(response.compareTo(BigDecimal.valueOf(215.8)), 0);
     }
 }
