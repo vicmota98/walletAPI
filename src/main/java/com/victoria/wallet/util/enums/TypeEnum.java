@@ -1,7 +1,5 @@
 package com.victoria.wallet.util.enums;
 
-import lombok.Data;
-
 public enum TypeEnum {
     EN("ENTRADA"),
     SD("SAÍDA");
