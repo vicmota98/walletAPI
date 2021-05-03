@@ -6,16 +6,16 @@ A principal funcionalidade dessa API é permitir o cadastro de usuários para ma
 ## Detalhes do projeto
 *Esse projeto possui as seguintes características:*
 
-* Projeto criado com Spring Boot e Java 8
-* Banco de dados Postgres com JPA e Spring Data JPA
-* Versionamento de banco de dados com Flyway
-* Testes com JUnit e Mockito com banco H2 em memória
-* Caching com EhCache
-* Nuvem do Heroku
-* Integração contínua com TravisCI
-* Project Lombok
-* Documentação dos endpoints com Swagger
-* Segurança da API com autenticação via tokens JWT 
+* Projeto criado com Spring Boot e Java 8;
+* Banco de dados Postgres com JPA e Spring Data JPA;
+* Versionamento de banco de dados com Flyway;
+* Testes com JUnit e Mockito com banco H2 em memória;
+* Caching com EhCache;
+* Nuvem do Heroku;
+* Integração contínua com TravisCI;
+* Project Lombok;
+* Documentação dos endpoints com Swagger,
+* Segurança da API com autenticação via tokens JWT .
 
 ## Como executar a aplicação
 Certifique-se de ter o Maven instalado e adicionado ao PATH de seu sistema operacional, assim como o Git, crie um banco de dados no postgres e altere o arquivo application.properties informando as credenciais para a aplicação acessar a base de dados, não se preocupe com a criação das tabelas, o flyway se encarregará dessa função.
