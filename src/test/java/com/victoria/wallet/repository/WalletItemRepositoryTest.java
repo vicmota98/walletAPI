@@ -43,25 +43,25 @@ public class WalletItemRepositoryTest{
     WalletRepository walletRepository;
 
 
-//    @Before
-//    public void setUp() {
-//        Wallet w = new Wallet();
-//        w.setName("Carteira Teste");
-//        w.setValue(BigDecimal.valueOf(250));
-//        walletRepository.save(w);
-//
-//        WalletItem wi = new WalletItem(null, w, DATE, TYPE, DESCRIPTION, VALUE);
-//        repository.save(wi);
-//
-//        savedWalletItemId = wi.getId();
-//        savedWalletId = w.getId();
-//    }
-//
-//    @After
-//    public void tearDown() {
-//        repository.deleteAll();
-//        walletRepository.deleteAll();
-//    }
+    @Before
+    public void setUp() {
+        Wallet w = new Wallet();
+        w.setName("Carteira Teste");
+        w.setValue(BigDecimal.valueOf(250));
+        walletRepository.save(w);
+
+        WalletItem wi = new WalletItem(null, w, DATE, TYPE, DESCRIPTION, VALUE);
+        repository.save(wi);
+
+        savedWalletItemId = wi.getId();
+        savedWalletId = w.getId();
+    }
+
+    @After
+    public void tearDown() {
+        repository.deleteAll();
+        walletRepository.deleteAll();
+    }
 
     @Test
     public void testSave() {
@@ -135,8 +135,8 @@ public class WalletItemRepositoryTest{
         Pageable pg = PageRequest.of(0,10);
         Page<WalletItem> response = repository.findAllByWalletIdAndDateGreaterThanEqualAndDateLessThanEqual(savedWalletId, DATE, currentDatePlusFiveDays,pg);
 
-        assertEquals(response.getContent().size(), 2);
-        assertEquals(response.getTotalElements(), 2);
+        assertEquals(response.getContent().size(), 1);
+        assertEquals(response.getTotalElements(), 1);
         assertEquals(response.getContent().get(0).getWallet().getId(), savedWalletId);
     }
 
@@ -144,7 +144,7 @@ public class WalletItemRepositoryTest{
     public void testFindByType() {
         List<WalletItem> response = repository.findByWalletIdAndType(savedWalletId, TYPE);
 
-        assertEquals(response.size(), 0);
+        assertEquals(response.size(), 1);
         assertEquals(response.get(0).getType(), TYPE);
     }
 

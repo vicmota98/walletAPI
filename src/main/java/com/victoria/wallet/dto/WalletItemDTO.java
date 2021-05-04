@@ -17,7 +17,7 @@ public class WalletItemDTO {
     @NotNull(message = "Insira o id da carteira")
     private Long wallet;
     @NotNull(message = "Informe uma data")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", locale = "pt-BR", timezone = "Brazil/East")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", locale = "pt-BR", timezone = "Brazil/East") //corpo de string, com padrão de data igual passado nos testes, com locale e timezone para bater as horas
     private Date date;
     @NotNull(message = "Informe um tipo")
     @Pattern(regexp="^(ENTRADA|SAÍDA)$", message = "Para o tipo somente são aceitos os valores ENTRADA ou SAÍDA")

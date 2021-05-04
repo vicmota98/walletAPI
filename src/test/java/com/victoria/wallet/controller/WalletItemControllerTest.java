@@ -2,7 +2,6 @@ package com.victoria.wallet.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.el.stream.Optional;
 import com.victoria.wallet.dto.WalletItemDTO;
 import com.victoria.wallet.entity.User;
 import com.victoria.wallet.entity.UserWallet;
@@ -30,7 +29,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.math.BigDecimal;
+import java.math.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -38,6 +37,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -57,13 +57,14 @@ public class WalletItemControllerTest {
     @Autowired
     MockMvc mvc;
 
-    private static final Long ID = 1L;
+
     private static final Date DATE = new Date();
     private static final LocalDate TODAY = LocalDate.now();
     private static final TypeEnum TYPE = TypeEnum.EN;
     private static final String DESCRIPTION = "Conta de Luz";
     private static final BigDecimal VALUE = BigDecimal.valueOf(65);
     private static final String URL = "/wallet-item";
+    private static final Long ID = 1L;
 
     @Test
     public void testSave() throws Exception {
@@ -97,7 +98,7 @@ public class WalletItemControllerTest {
         user.setId(1L);
 
         BDDMockito.given(service.findBetweenDates(Mockito.anyLong(), Mockito.any(Date.class), Mockito.any(Date.class), Mockito.anyInt())).willReturn(page);
-        BDDMockito.given(userService.findByEmail(Mockito.anyString())).willReturn(Optional.of(user));
+        BDDMockito.given(userService.findByEmail(Mockito.anyString())).willReturn(java.util.Optional.of(user));
         BDDMockito.given(userWalletService.findByUsersIdAndWalletId(Mockito.anyLong(), Mockito.anyLong())).willReturn(Optional.of(new UserWallet()));
 
         mvc.perform(MockMvcRequestBuilders.get(URL + "/1?startDate=" + startDate + "&endDate=" + endDate)
@@ -201,7 +202,7 @@ public class WalletItemControllerTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.data").doesNotExist())
-                .andExpect(jsonPath("$.errors[0]").value("WalletItem não encontrado"));
+                .andExpect(jsonPath("$.errors[0]").value("WalletItem não encontrada"));
 
     }
 
@@ -214,7 +215,7 @@ public class WalletItemControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data").value("WalletItem de id "+ ID +" apagada com sucesso"));
+                .andExpect(jsonPath("$.data").value("WalletItem de ID "+ ID +" apagada com sucesso"));
     }
 
     @Test
@@ -227,7 +228,7 @@ public class WalletItemControllerTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.data").doesNotExist())
-                .andExpect(jsonPath("$.errors[0]").value("WalletItem de id "+ 99 + " não encontrada"));
+                .andExpect(jsonPath("$.errors[0]").value("WalletItem de ID "+ 99 + " não encontrada"));
 
     }
 
@@ -255,6 +256,7 @@ public class WalletItemControllerTest {
     private DateTimeFormatter getDateFormater() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return formatter;
+
     }
 
 }
