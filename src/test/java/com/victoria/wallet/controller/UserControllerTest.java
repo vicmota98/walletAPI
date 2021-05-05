@@ -16,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -28,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 //@ActiveProfiles("test")
 public class UserControllerTest {
-    private static final String EMAIL = "email@teste.com";
+    private static final String EMAIL = "email@tese.com";
     private static final String NAME = "User Test";
     private static final String PASSWORD = "123456";
     private static final String URL = "/user";
@@ -41,6 +42,7 @@ public class UserControllerTest {
     MockMvc mvc;
 
     @Test
+    @WithMockUser
     public void testSave() throws Exception {
 
         BDDMockito.given(service.save(Mockito.any(User.class))).willReturn(getMockUser());
@@ -56,6 +58,7 @@ public class UserControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void testSaveInvalidUser() throws Exception {
 
         mvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayload(ID, "email", NAME, PASSWORD))

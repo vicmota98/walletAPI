@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -23,7 +24,7 @@ import com.victoria.wallet.entity.User;
 //@ActiveProfiles("test")
 public class UserRepositoryTest {
 
-    private static final String EMAIL = "email@teste.com";
+    private static final String EMAIL = "email@tese.com";
 
     //injetar classe para teste
     @Autowired
@@ -45,6 +46,7 @@ public class UserRepositoryTest {
     }
 
     @Test
+    @WithMockUser
 
     public void testSave() {
         //instancia novo usuário com seus atributos
@@ -58,6 +60,7 @@ public class UserRepositoryTest {
     }
 
     @Test
+    @WithMockUser
     public void testFindByEmail() {
        Optional<User> response= repository.findByEmailEquals(EMAIL);
         assertTrue(response.isPresent());

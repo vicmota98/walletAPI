@@ -3,9 +3,11 @@ package com.victoria.wallet.util;
 import com.victoria.wallet.entity.User;
 import com.victoria.wallet.service.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+@Component
 public class Util {
     private static UserService staticService;
     public Util(UserService service) {

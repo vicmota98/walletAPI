@@ -67,6 +67,7 @@ public class WalletItemControllerTest {
     private static final Long ID = 1L;
 
     @Test
+    @WithMockUser
     public void testSave() throws Exception {
 
         BDDMockito.given(service.save(Mockito.any(WalletItem.class))).willReturn(getMockWalletItem());
@@ -151,6 +152,7 @@ public class WalletItemControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void testUpdate() throws Exception {
 
         String description = "Nova descrição";
@@ -174,6 +176,7 @@ public class WalletItemControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void testUpdateWalletChange() throws Exception {
 
         Wallet w = new Wallet();
@@ -193,6 +196,7 @@ public class WalletItemControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void testUpdateInvalidId() throws Exception {
 
         BDDMockito.given(service.findById(Mockito.anyLong())).willReturn(Optional.empty());
@@ -207,6 +211,7 @@ public class WalletItemControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void testDelete() throws Exception {
 
         BDDMockito.given(service.findById(Mockito.anyLong())).willReturn(Optional.of(new WalletItem()));
@@ -219,6 +224,7 @@ public class WalletItemControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void testDeleteInvalid() throws Exception {
 
         BDDMockito.given(service.findById(Mockito.anyLong())).willReturn(Optional.empty());

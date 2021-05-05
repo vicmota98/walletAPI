@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -64,6 +65,7 @@ public class WalletItemRepositoryTest{
     }
 
     @Test
+    @WithMockUser
     public void testSave() {
 
         Wallet w = new Wallet();
@@ -84,12 +86,14 @@ public class WalletItemRepositoryTest{
     }
 
     @Test(expected = ConstraintViolationException.class)
+    @WithMockUser
     public void testSaveInvalidWalletItem() {
         WalletItem wi = new WalletItem(null, null, DATE, null, DESCRIPTION, null);
         repository.save(wi);
     }
 
     @Test
+    @WithMockUser
     public void testUpdate() {
         Optional<WalletItem> wi = repository.findById(savedWalletItemId);
 
@@ -106,6 +110,7 @@ public class WalletItemRepositoryTest{
     }
 
     @Test
+    @WithMockUser
     public void deleteWalletItem() {
         Optional<Wallet> wallet = walletRepository.findById(savedWalletId);
         WalletItem wi = new WalletItem(null, wallet.get(), DATE, TYPE, DESCRIPTION, VALUE);
@@ -120,6 +125,7 @@ public class WalletItemRepositoryTest{
     }
 
     @Test
+    @WithMockUser
     public void testFindBetweenDates() {
         Optional<Wallet> w = walletRepository.findById(savedWalletId);
 
@@ -141,6 +147,7 @@ public class WalletItemRepositoryTest{
     }
 
     @Test
+    @WithMockUser
     public void testFindByType() {
         List<WalletItem> response = repository.findByWalletIdAndType(savedWalletId, TYPE);
 
@@ -149,6 +156,7 @@ public class WalletItemRepositoryTest{
     }
 
     @Test
+    @WithMockUser
     public void testFindByTypeSd() {
 
         Optional<Wallet> w = walletRepository.findById(savedWalletId);
@@ -162,6 +170,7 @@ public class WalletItemRepositoryTest{
     }
 
     @Test
+    @WithMockUser
     public void testSumByWallet() {
         Optional<Wallet> w = walletRepository.findById(savedWalletId);
 
