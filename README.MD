@@ -68,4 +68,4 @@ mvn test
 ### Documentação
 Utilize a interface do Swagger para ter acesso a documentação dos endpoints, ela está disponível na url http://localhost:8080/swagger-ui.html
 ### Heroku
-A aplicação está disponível no heroku através da url https://apiwallet.herokuapp.com/
+A aplicação está disponível no heroku através da url https://apiwallet2021.herokuapp.com/
